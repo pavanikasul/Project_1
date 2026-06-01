@@ -322,7 +322,7 @@ export default function DashboardPage() {
 
             // ── Check if exam was actually completed (requires real score_data) ──
             try {
-              const score = calculateScoreFromLocal(sessionUser, activeRescheduleSlot);
+              const score = calculateScoreFromLocal(sessionUser);
               if (score !== null) {
                 setHasTakenExam(true);
                 setCandidateScore(score);
