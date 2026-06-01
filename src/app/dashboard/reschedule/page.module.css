@@ -1,0 +1,709 @@
+.wrapper {
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--bg-alt);
+  background-image: radial-gradient(at 0% 0%, rgba(0, 143, 140, 0.05) 0px, transparent 50%),
+                    radial-gradient(at 50% 0%, rgba(10, 53, 87, 0.05) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(0, 143, 140, 0.05) 0px, transparent 50%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+  overflow: hidden;
+  font-family: var(--font-family);
+  transition: background-color 0.3s ease;
+}
+
+/* Background elements for premium glow */
+.circle1 {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(0, 143, 140, 0.15) 0%, rgba(0, 143, 140, 0) 70%);
+  border-radius: 50%;
+  filter: blur(40px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.circle2 {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(10, 53, 87, 0.15) 0%, rgba(10, 53, 87, 0) 70%);
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 850px;
+  z-index: 5;
+}
+
+/* Header & Branding */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brandIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 143, 140, 0.3);
+}
+
+.brandName {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--secondary);
+  display: block;
+  letter-spacing: 0.5px;
+}
+
+.brandTag {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  display: block;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.backLink:hover {
+  background-color: rgba(10, 53, 87, 0.05);
+}
+
+/* Glassmorphism Card Theme */
+.glassCard {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  box-shadow: var(--shadow-lg), 0 20px 40px rgba(0,0,0,0.02);
+}
+
+.formHeader {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.illustrationWrap {
+  display: inline-flex;
+  padding: 16px;
+  border-radius: 50%;
+  background: rgba(0, 143, 140, 0.08);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--secondary);
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+/* Form Styles */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label, .textareaGroup label, .uploadGroup label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--secondary);
+}
+
+.formGroup input, .formGroup select, .textareaGroup textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: rgba(255, 255, 255, 0.8);
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+
+.formGroup input:focus, .formGroup select:focus, .textareaGroup textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(0, 143, 140, 0.1);
+  background-color: #ffffff;
+}
+
+.inputError {
+  border-color: #ef4444 !important;
+}
+
+.errorText {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.textareaGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.textareaGroup textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Upload Section */
+.uploadGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.optional {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.uploadBox {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.uploadBox:hover {
+  border-color: var(--primary);
+  background-color: rgba(0, 143, 140, 0.02);
+}
+
+.uploadBoxSuccess {
+  border-color: #22c55e;
+  background-color: rgba(34, 197, 148, 0.03);
+}
+
+.fileInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.uploadLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.uploadLabel span {
+  font-weight: 600;
+}
+
+.subtext {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 400 !important;
+}
+
+.progressContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.progressBar {
+  height: 4px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+  transition: width 0.15s ease;
+}
+
+.uploadSuccessBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #15803d;
+}
+
+.uploadSize {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Button Layout */
+.btnRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+/* Loader Styles */
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loaderContent {
+  background: var(--bg-main);
+  padding: 40px;
+  border-radius: var(--radius-xl);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  max-width: 400px;
+  width: 90%;
+  border: 1px solid var(--border);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  color: var(--primary);
+  margin: 0 auto 20px auto;
+}
+
+/* Success Card View */
+.successCard {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 50px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.successBadge {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px auto;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+.successMessage {
+  font-size: 1.15rem;
+  color: var(--secondary);
+  font-weight: 700;
+  line-height: 1.6;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(5, 96, 105, 0.03) 100%);
+  border: 1px dashed #a7f3d0;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
+}
+
+.emailNotificationBox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #047857;
+  background: #ecfdf5;
+  padding: 10px 18px;
+  border-radius: 20px;
+  border: 1px solid #d1fae5;
+}
+
+/* Tracker Card View */
+.trackerCard {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  box-shadow: var(--shadow-lg);
+}
+
+.trackerHeader {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 24px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.iconCircle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(0, 143, 140, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trackerHeader h2 {
+  font-size: 1.45rem;
+  color: var(--secondary);
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.trackerHeader p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.badge {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: auto;
+}
+
+@media (max-width: 576px) {
+  .badge {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
+.badgeSuccess { background-color: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
+.badgeWarning { background-color: #fef9c3; color: #ca8a04; border: 1px solid #fef08a; }
+.badgeDanger { background-color: #fee2e2; color: #ef4444; border: 1px solid #fecaca; }
+.badgeDefault { background-color: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+
+/* Stepper Status tracker Layout */
+.stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  margin-bottom: 35px;
+  padding-left: 10px;
+}
+
+.stepper::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 21px;
+  bottom: 15px;
+  width: 3px;
+  background-color: var(--border);
+  z-index: 1;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.stepMarker {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: var(--bg-main);
+  border: 3px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  box-shadow: 0 0 0 4px var(--bg-alt);
+  transition: all 0.3s ease;
+}
+
+.stepInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stepLabel {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.stepDesc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Stepper State Overrides */
+.completed .stepMarker {
+  background-color: #22c55e;
+  border-color: #22c55e;
+  color: white;
+  box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.15);
+}
+
+.completed .stepLabel {
+  color: #16a34a;
+}
+
+.active .stepMarker {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  box-shadow: 0 0 0 6px rgba(0, 143, 140, 0.2);
+  animation: pulseMarker 2s infinite ease-in-out;
+}
+
+.active .stepLabel {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.failed .stepMarker {
+  background-color: #ef4444;
+  border-color: #ef4444;
+  color: white;
+  box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.15);
+}
+
+.failed .stepLabel {
+  color: #ef4444;
+}
+
+/* Info Section inside Tracker */
+.infoSection {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.pendingReviewBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reviewText {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  color: var(--text-main);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.pulsingIcon {
+  color: var(--primary);
+  flex-shrink: 0;
+  animation: pulseIcon 1.5s infinite ease-in-out;
+}
+
+.emailNotificationConfirmation {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+
+.successSlotInfo {
+  text-align: center;
+  color: var(--text-main);
+}
+
+.successSlotInfo h3 {
+  color: #16a34a;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  font-weight: 800;
+}
+
+.slotTimeBox {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 24px;
+  font-size: 1.05rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.notificationPrompt {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.rejectedBox {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #991b1b;
+  line-height: 1.6;
+}
+
+/* Dark Mode support */
+[data-theme='dark'] .wrapper {
+  background-color: var(--bg-alt);
+  background-image: radial-gradient(at 0% 0%, rgba(0, 143, 140, 0.08) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(15, 23, 42, 0.5) 0px, transparent 50%);
+}
+
+[data-theme='dark'] .glassCard {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .formGroup input, [data-theme='dark'] .formGroup select, [data-theme='dark'] .textareaGroup textarea {
+  background-color: rgba(15, 23, 42, 0.5);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .formGroup input:focus, [data-theme='dark'] .formGroup select:focus, [data-theme='dark'] .textareaGroup textarea:focus {
+  background-color: rgba(15, 23, 42, 0.8);
+}
+
+[data-theme='dark'] .uploadBox {
+  background-color: rgba(15, 23, 42, 0.3);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .successCard, [data-theme='dark'] .trackerCard {
+  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .slotTimeBox {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] .brandName, [data-theme='dark'] .title {
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .formGroup label, [data-theme='dark'] .textareaGroup label, [data-theme='dark'] .uploadGroup label, [data-theme='dark'] .backLink, [data-theme='dark'] .trackerHeader h2 {
+  color: #e2e8f0;
+}
+
+/* Keyframe Animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseMarker {
+  0% { box-shadow: 0 0 0 0 rgba(0, 143, 140, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(0, 143, 140, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 143, 140, 0); }
+}
+
+@keyframes pulseIcon {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}

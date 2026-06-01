@@ -1,0 +1,280 @@
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Modal Overlay & Card Drawer */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  z-index: 999;
+}
+
+.modalContent {
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--bg-main);
+  border-left: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  animation: slideLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.modalHeader {
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-alt);
+}
+
+.modalHeader h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--secondary);
+  margin: 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeBtn:hover {
+  background-color: var(--border);
+  color: var(--text-main);
+}
+
+.modalBody {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Profile Hero */
+.profileHero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1.5px solid var(--border);
+}
+
+.avatarMockup {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileNameDetails h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--secondary);
+  margin: 0 0 2px 0;
+}
+
+.profileNameDetails span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Details Grid */
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detailCard {
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detailCard span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detailCard strong {
+  font-size: 0.88rem;
+  color: var(--text-main);
+  word-break: break-all;
+}
+
+/* Claims Section */
+.claimContainer {
+  background-color: rgba(0, 143, 140, 0.02);
+  border: 1px dashed var(--primary);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.claimContainer h4 {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.8px;
+  margin: 0;
+}
+
+.reasonBadge {
+  font-size: 0.85rem;
+  color: var(--secondary);
+}
+
+.reasonBadge strong {
+  background-color: #ffedd5;
+  color: #c2410c;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-left: 5px;
+}
+
+.explanationBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.explanationBox h5 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin: 0;
+}
+
+.explanationBox p {
+  font-size: 0.85rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  background-color: white;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  margin: 0;
+}
+
+.docBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: white;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.docBox div {
+  display: flex;
+  flex-direction: column;
+}
+
+.docBox strong {
+  font-size: 0.82rem;
+  color: var(--secondary);
+}
+
+.docBox span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.attachmentBadge {
+  margin-left: auto;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #16a34a;
+  background-color: #dcfce7;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* Schedule Form */
+.scheduleForm {
+  border-top: 1.5px solid var(--border);
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.scheduleForm h4 {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--secondary);
+  letter-spacing: 0.8px;
+  margin: 0;
+}
+
+.schedulerGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.schedulerGrid label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.actionsRow {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}

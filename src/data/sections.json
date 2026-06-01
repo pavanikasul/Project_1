@@ -1,0 +1,17 @@
+[
+  { "id": "set-1-sec-1", "examSetId": "set-1", "name": "Numerical Reasoning", "position": 1 },
+  { "id": "set-1-sec-2", "examSetId": "set-1", "name": "Verbal Reasoning",    "position": 2 },
+  { "id": "set-1-sec-3", "examSetId": "set-1", "name": "Logical Reasoning",   "position": 3 },
+
+  { "id": "set-2-sec-1", "examSetId": "set-2", "name": "Numerical Reasoning", "position": 1 },
+  { "id": "set-2-sec-2", "examSetId": "set-2", "name": "Verbal Reasoning",    "position": 2 },
+  { "id": "set-2-sec-3", "examSetId": "set-2", "name": "Logical Reasoning",   "position": 3 },
+
+  { "id": "set-3-sec-1", "examSetId": "set-3", "name": "Numerical Reasoning", "position": 1 },
+  { "id": "set-3-sec-2", "examSetId": "set-3", "name": "Verbal Reasoning",    "position": 2 },
+  { "id": "set-3-sec-3", "examSetId": "set-3", "name": "Logical Reasoning",   "position": 3 },
+
+  { "id": "set-4-sec-1", "examSetId": "set-4", "name": "Numerical Reasoning", "position": 1 },
+  { "id": "set-4-sec-2", "examSetId": "set-4", "name": "Verbal Reasoning",    "position": 2 },
+  { "id": "set-4-sec-3", "examSetId": "set-4", "name": "Logical Reasoning",   "position": 3 }
+]

@@ -1,0 +1,137 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+
+.uploadArea {
+  background: var(--bg-main);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  margin-bottom: 40px;
+  box-shadow: var(--shadow-sm);
+}
+
+.dropzone {
+  border: 3px dashed var(--border);
+  border-radius: var(--radius-lg);
+  padding: 60px;
+  text-align: center;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.dropzone:hover {
+  border-color: var(--secondary);
+  background: rgba(28, 176, 246, 0.05);
+}
+
+.uploadIcon {
+  color: var(--secondary);
+  margin-bottom: 20px;
+}
+
+.fileInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.fileLabel {
+  margin-top: 15px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.previewArea {
+  margin-top: 40px;
+}
+
+.previewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.questionList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.qCard {
+  background: var(--bg-main);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.qHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.qType {
+  background: var(--bg-alt);
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+.qActions {
+  display: flex;
+  gap: 8px;
+}
+
+.iconBtn {
+  padding: 8px;
+}
+
+.qText {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.optItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.optDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.correctAnswer {
+  padding-top: 15px;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--primary);
+}

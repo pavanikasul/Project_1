@@ -1,0 +1,378 @@
+.adminSection {
+  background-color: #f8fafc;
+  padding: 4rem 1.5rem;
+  font-family: var(--font-inter, 'Inter', sans-serif);
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.title {
+  color: #0A3557;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.pulseIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #008F8C;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.pulseDot {
+  width: 10px;
+  height: 10px;
+  background-color: #008F8C;
+  border-radius: 50%;
+  position: relative;
+}
+
+.pulseDot::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  border: 2px solid #008F8C;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.gridCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+  border: 1px solid #f1f5f9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.growthBadge {
+  background-color: #f0fdf4;
+  color: #16a34a;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.liveBadge {
+  background-color: #fff1f2;
+  color: #e11d48;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.cardValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.25rem 0;
+}
+
+.cardLabel {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.violationsPanel, .chartPanel {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  border: 1px solid #f1f5f9;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.panelHeader h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #0A3557;
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.panelIcon {
+  color: #e11d48;
+}
+
+.viewAllBtn {
+  background: none;
+  border: none;
+  color: #008F8C;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.viewAllBtn:hover {
+  text-decoration: underline;
+}
+
+.violationList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.violationItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+  transition: background-color 0.2s;
+}
+
+.violationItem:hover {
+  background-color: #f8fafc;
+}
+
+.violationIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.violationInfo h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.violationInfo p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.violationMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.severityBadge {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.high, .critical {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.medium {
+  background-color: #fef9c3;
+  color: #a16207;
+}
+
+.violationStatus {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0f172a;
+  background-color: #f1f5f9;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.chartMockup {
+  height: 200px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-end;
+  padding-top: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.chartBars {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+  align-items: flex-end;
+}
+
+.barContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  height: 100%;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.bar {
+  width: 30px;
+  background-color: #cbd5e1;
+  border-radius: 4px 4px 0 0;
+  transition: height 1s ease-out;
+}
+
+.barContainer span {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.recentActivity h4 {
+  margin: 0 0 0.75rem 0;
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.recentActivity ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.recentActivity li {
+  font-size: 0.875rem;
+  color: #475569;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.recentActivity li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #008F8C;
+}
+
+@media (max-width: 768px) {
+  .violationItem {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+  }
+  .violationMeta {
+    grid-column: 2;
+    align-items: flex-start;
+    flex-direction: row;
+  }
+  .violationStatus {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+}

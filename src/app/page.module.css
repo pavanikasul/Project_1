@@ -1,0 +1,361 @@
+.container {
+  min-height: 100vh;
+  background-color: var(--bg-main);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  border-bottom: 1px solid var(--border);
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logoImage {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.logoTextContainer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.brandAptitude {
+  color: #0A3557;
+}
+
+.brandEdge {
+  color: #008F8C;
+  background: linear-gradient(135deg, #008F8C 30%, #00bfa5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.navLink {
+  font-weight: 600;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.navLink:hover {
+  color: var(--primary);
+}
+
+.hero {
+  padding: 80px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+}
+
+.heroContent {
+  max-width: 1000px;
+  padding: 0 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badge {
+  background: var(--bg-alt);
+  color: var(--secondary);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+
+.title {
+  font-size: 4rem;
+  line-height: 1.1;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+}
+
+.highlight {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.heroDesc {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.ctaGroup {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  margin-bottom: 60px;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.heroImageContainer {
+  width: 90%;
+  max-width: 1000px;
+  margin: 40px auto 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border: 1px solid var(--border);
+}
+
+.heroImage {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+}
+
+.section {
+  padding: 80px 5%;
+  background: var(--bg-alt);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.sectionTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.sectionDesc {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.featureCard {
+  background: white;
+  padding: 32px 24px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.featureCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.featureIcon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--bg-alt);
+  color: var(--primary);
+}
+
+.featureCard h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-main);
+}
+
+.featureCard p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.stepsSection {
+  padding: 80px 5%;
+  background: white;
+}
+
+.stepsContainer {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.step {
+  flex: 1;
+  padding: 0 20px;
+  position: relative;
+}
+
+.stepNumber {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.stepTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.stepDesc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.ctaFooter {
+  background: var(--secondary);
+  padding: 60px 20px;
+  text-align: center;
+  color: white;
+}
+
+.ctaFooter h2 {
+  font-size: 2rem;
+  margin-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  .title { font-size: 3rem; }
+  .features { grid-template-columns: repeat(2, 1fr); }
+  .stats { gap: 40px; flex-wrap: wrap; }
+  .stepsContainer { flex-direction: column; gap: 40px; }
+  .heroImage { height: 440px; }
+}
+
+@media (max-width: 768px) {
+  .title { font-size: 2.5rem; }
+  .features { grid-template-columns: 1fr; }
+  .ctaGroup { flex-direction: column; }
+  .stats { flex-direction: column; gap: 24px; }
+  .nav { gap: 12px; }
+  .navDivider { display: none; }
+  .adminBtn { padding: 6px 10px; font-size: 0.85rem; }
+  .heroImage { height: 340px; }
+  
+  .logoTextContainer {
+    font-size: 1.25rem;
+    gap: 4px;
+  }
+  .logoContainer {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logoTextContainer {
+    font-size: 1.05rem;
+    gap: 2px;
+  }
+  .logoContainer {
+    gap: 8px;
+  }
+  .heroImage { height: 240px; }
+}
+
+.navDivider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--border);
+  margin: 0 4px;
+}
+
+.adminBtn {
+  background-color: #0A3557;
+  color: white;
+  border: 1px solid #008F8C;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.adminBtn:hover {
+  background-color: #008F8C;
+  border-color: #0A3557;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 143, 140, 0.3);
+}

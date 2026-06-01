@@ -1,0 +1,101 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-alt);
+  padding: 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 500px;
+  background: var(--bg-main);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  box-shadow: 0 8px 0 var(--border);
+  text-align: center;
+}
+
+.trophySection {
+  margin-bottom: 40px;
+}
+
+.trophyCircle {
+  width: 160px;
+  height: 160px;
+  background: rgba(88, 204, 2, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  border: 4px dashed var(--primary);
+}
+
+.successIcon {
+  color: var(--primary);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.quoteCard {
+  background: #f7f7f7;
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 30px;
+  border-left: 5px solid var(--secondary);
+}
+
+.quoteText {
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+
+.quoteAuthor {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.messageCard {
+  background: var(--bg-alt);
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-align: left;
+  margin-bottom: 40px;
+  border: 2px solid var(--border);
+}
+
+.messageCard p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.iconSuccess { color: var(--primary); flex-shrink: 0; }
+.iconWarning { color: var(--danger); flex-shrink: 0; }
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
