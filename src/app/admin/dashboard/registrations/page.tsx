@@ -408,7 +408,7 @@ export default function RegistrationsPage() {
 
     // Refresh candidate list
     fetchCandidates();
-
+  };
     
 
   const handleReject = async (candidateId: string) => {
