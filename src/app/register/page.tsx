@@ -248,6 +248,14 @@ export default function RegisterPage() {
                         }
                       }
                     });
+                    console.log('authData:', authData)
+console.log('authError:', authError)
+                    if (authError) {
+  alert(authError.message)
+  console.error(authError)
+  return
+}
+                    
 
                     if (authError) {
                       console.warn("Supabase Auth Error:", authError);
