@@ -408,46 +408,7 @@ export default function RegistrationsPage() {
     // Refresh candidate list
     fetchCandidates();
 
-    // Trigger Email sending API
-    if (candidate && candidate.email) {
-      try {
-        const response = await fetch('/api/send-email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            to: candidate.email,
-            candidateName: candidate.full_name || 'Candidate',
-            examSlot: scheduledTime,
-            examLink: window.location.origin + '/login',
-            subject: 'AptitudeEdge Exam Slot Scheduled & Approved'
-          })
-        });
-        const data = await response.json();
-        if (data.success) {
-          setEmailStatus({
-            show: true,
-            candidateName: candidate.full_name || 'Candidate',
-            email: candidate.email,
-            previewUrl: data.previewUrl,
-            statusText: data.status || 'Email Sent'
-          });
-          
-          // Auto hide after 12 seconds unless it has a preview link
-          if (!data.previewUrl) {
-            setTimeout(() => {
-              setEmailStatus(prev => prev?.email === candidate.email ? null : prev);
-            }, 12000);
-          }
-        } else {
-          console.error("Email sending failed:", data.error);
-        }
-      } catch (err) {
-        console.error("Error triggering email dispatch API:", err);
-      }
-    }
-  };
+    
 
   const handleReject = async (candidateId: string) => {
     // Update local storage
