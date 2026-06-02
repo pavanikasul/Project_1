@@ -406,6 +406,8 @@ export default function RegistrationsPage() {
     // Update Supabase profiles table ONLY if candidateId is a valid UUID
     try {
       const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(candidateId);
+      console.log("candidateId =", candidateId);
+console.log("isUUID =", isUUID);
       if (isUUID) {
        const { data, error } = await supabase
   .from('profiles')
