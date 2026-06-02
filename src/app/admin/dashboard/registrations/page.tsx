@@ -414,6 +414,7 @@ export default function RegistrationsPage() {
           })
           .eq('id', candidateId);
         console.log("SUPABASE ERROR:", error);
+        console.log("SCHEDULED TIME:", scheduledTime);
 
         if (error) {
           console.error("Supabase exam_slot update failed:", error);
