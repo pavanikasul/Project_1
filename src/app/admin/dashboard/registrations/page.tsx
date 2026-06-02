@@ -384,6 +384,17 @@ export default function RegistrationsPage() {
       exam_slot: scheduledTime
     };
     updateCandidateLocal(candidateId, updates);
+    setCandidates(prev =>
+  prev.map(c =>
+    c.id === candidateId
+      ? {
+          ...c,
+          status: 'Approved',
+          exam_slot: scheduledTime
+        }
+      : c
+  )
+);
 
     // Update Supabase profiles table ONLY if candidateId is a valid UUID
     try {
