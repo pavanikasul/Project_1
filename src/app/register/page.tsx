@@ -278,8 +278,9 @@ console.log('authError:', authError)
                       });
                       if (profileError) {
   console.error("Profile insert error:", profileError);
-  alert("Profile insert error: " + profileError.message);
+  alert(profileError.message);
 }
+                    
 else {
   console.log("Profile inserted successfully");
   alert("Profile inserted successfully");
@@ -287,9 +288,11 @@ else {
 
                      
                     }
-                  } catch (supabaseErr) {
-                    console.error("Supabase network error (Likely paused or invalid URL):", supabaseErr);
                   }
+                catch (supabaseErr) {
+  console.error("Supabase network error:", supabaseErr);
+  alert(JSON.stringify(supabaseErr));
+}
 
                   // 3. Save session locally (Fallback for testing if Supabase fails)
                   const sessionUser = {
