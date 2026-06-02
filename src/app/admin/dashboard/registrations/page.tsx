@@ -397,6 +397,10 @@ export default function RegistrationsPage() {
       : c
   )
 );
+    console.log(
+  "UPDATED CANDIDATE",
+  candidates.find(c => c.id === candidateId)
+);
 
     // Update Supabase profiles table ONLY if candidateId is a valid UUID
     try {
@@ -422,7 +426,7 @@ export default function RegistrationsPage() {
     }
 
     // Refresh candidate list
-    await fetchCandidates();
+    // fetchCandidates();
   };
     
 
