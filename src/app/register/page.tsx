@@ -288,12 +288,12 @@ if (!authData?.user) {
                   console.log('profileError:', profileError);
                       if (profileError) {
   console.error("Profile insert error:", profileError);
-  alert(profileError.message);
+ 
 }
                     
 else {
   console.log("Profile inserted successfully");
-  alert("Profile inserted successfully");
+  
 }
 
                      
@@ -301,7 +301,8 @@ else {
                   }
                 catch (supabaseErr) {
   console.error("Supabase network error:", supabaseErr);
-  alert(JSON.stringify(supabaseErr));
+                  
+
 }
 
                   // 3. Save session locally (Fallback for testing if Supabase fails)
