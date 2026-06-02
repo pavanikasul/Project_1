@@ -391,6 +391,7 @@ export default function RegistrationsPage() {
         const { error } = await supabase
           .from('profiles')
           .update({
+            status: 'Approved',
             exam_slot: scheduledTime
           })
           .eq('id', candidateId);
