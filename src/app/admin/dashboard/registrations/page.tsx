@@ -383,7 +383,9 @@ export default function RegistrationsPage() {
       status: 'Approved',
       exam_slot: scheduledTime
     };
+    console.log("UPDATES:", updates);
     updateCandidateLocal(candidateId, updates);
+    console.log("LOCAL UPDATE DONE");
     setCandidates(prev =>
   prev.map(c =>
     c.id === candidateId
@@ -407,6 +409,7 @@ export default function RegistrationsPage() {
             exam_slot: scheduledTime
           })
           .eq('id', candidateId);
+        console.log("SUPABASE ERROR:", error);
 
         if (error) {
           console.error("Supabase exam_slot update failed:", error);
@@ -419,7 +422,7 @@ export default function RegistrationsPage() {
     }
 
     // Refresh candidate list
-    fetchCandidates();
+    await fetchCandidates();
   };
     
 
