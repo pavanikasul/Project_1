@@ -586,8 +586,10 @@ export default function RegistrationsPage() {
                       <button 
                         className={styles.btnPrimary} 
                         style={{ padding: '0.4rem 0.8rem', background: '#22c55e', color: 'white', fontSize: '0.85rem', fontWeight: 'bold', border: 'none', borderRadius: '6px', cursor: 'pointer' }} 
-                        onClick={() =>{console.log("ACCEPT BUTTON CLICKED", reg.id);
-                                       handleAccept(reg.id)}}
+                        onClick={() =>{
+                          console.log("ACCEPT BUTTON CLICKED", reg.id);
+                                       handleAccept(reg.id)
+                        }}
                       >
                         Accept
                       </button>
