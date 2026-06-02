@@ -407,15 +407,17 @@ export default function RegistrationsPage() {
     try {
       const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(candidateId);
       if (isUUID) {
-        const { error } = await supabase
-          .from('profiles')
-          .update({
-            status: 'Approved',
-            exam_slot: scheduledTime
-          })
-          .eq('id', candidateId);
-        console.log("SUPABASE ERROR:", error);
-        console.log("SCHEDULED TIME:", scheduledTime);
+       const { data, error } = await supabase
+  .from('profiles')
+  .update({
+    status: 'Approved',
+    exam_slot: scheduledTime
+  })
+  .eq('id', candidateId)
+  .select();
+
+console.log("UPDATED ROWS:", data);
+console.log("ERROR:", error);
 
         if (error) {
           console.error("Supabase exam_slot update failed:", error);
