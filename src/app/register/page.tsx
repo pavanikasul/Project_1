@@ -248,6 +248,9 @@ export default function RegisterPage() {
                         }
                       }
                     });
+                    alert("authError = " + JSON.stringify(authError));
+alert("authData = " + JSON.stringify(authData));
+                    
                     console.log('authData:', authData)
 console.log('authError:', authError)
                     if (authError) {
