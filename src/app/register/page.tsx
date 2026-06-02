@@ -276,10 +276,16 @@ console.log('authError:', authError)
                         exam_slot: null,
                         created_at: new Date().toISOString()
                       });
+                      if (profileError) {
+  console.error("Profile insert error:", profileError);
+  alert("Profile insert error: " + profileError.message);
+}
+else {
+  console.log("Profile inserted successfully");
+  alert("Profile inserted successfully");
+}
 
-                      if (profileError && !profileError.message.includes('row-level security')) {
-                        console.error("Profile insert error:", profileError);
-                      }
+                     
                     }
                   } catch (supabaseErr) {
                     console.error("Supabase network error (Likely paused or invalid URL):", supabaseErr);
