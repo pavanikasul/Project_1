@@ -162,7 +162,7 @@ export default function ReschedulePage() {
       try {
         const localRequests = JSON.parse(localStorage.getItem('rescheduleRequests') || '[]');
         const userRequests = localRequests
-          .filter((r: any) => r.candidate_id === userId || r.email === email)
+          .filter((r: any) => r.candidate_id === userId )
           .sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
         allRequests = userRequests;
       } catch (e) {
