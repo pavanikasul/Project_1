@@ -583,16 +583,26 @@ export default function RegistrationsPage() {
                   </button>
                   {(reg.status || 'Pending') === 'Pending' && (
                     <>
-                      <button 
-                        className={styles.btnPrimary} 
-                        style={{ padding: '0.4rem 0.8rem', background: '#22c55e', color: 'white', fontSize: '0.85rem', fontWeight: 'bold', border: 'none', borderRadius: '6px', cursor: 'pointer' }} 
-                        onClick={() =>{
-                          console.log("ACCEPT BUTTON CLICKED", reg.id);
-                                       handleAccept(reg.id)
-                        }}
-                      >
-                        Accept
-                      </button>
+                      <button
+  className={styles.btnPrimary}
+  style={{
+    padding: '0.4rem 0.8rem',
+    background: '#22c55e',
+    color: 'white',
+    fontSize: '0.85rem',
+    fontWeight: 'bold',
+    border: 'none',
+    borderRadius: '6px',
+    cursor: 'pointer'
+  }}
+  onClick={() => {
+    console.log("ACCEPT BUTTON CLICKED", reg.id);
+    handleAccept(reg.id);
+  }}
+>
+  Accept
+</button>
+                     
                       <button 
                         className={styles.btnOutline} 
                         style={{ padding: '0.4rem 0.8rem', borderColor: '#ef4444', color: '#ef4444', fontSize: '0.85rem', fontWeight: 'bold', borderRadius: '6px', cursor: 'pointer' }} 
