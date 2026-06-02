@@ -360,7 +360,7 @@ export default function RegistrationsPage() {
   };
 
   const handleAccept = async (candidateId: string) => {
-    console.log("HANDLE ACCEPT RUNNING", candidateId);
+    console.log("candidateId", candidateId);
     // Schedule 5.5 hours from now
     let scheduledDate = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
     const hour = scheduledDate.getHours();
