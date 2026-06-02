@@ -284,6 +284,7 @@ export default function RegistrationsPage() {
       });
 
       setCandidates(finalUnique);
+      console.log("SCHEDULED TIME:", scheduledTime);
     } catch (err) {
       console.error('Candidate fetch failed:', err);
       const localCandidates: any[] = JSON.parse(localStorage.getItem('allCandidates') || '[]');
