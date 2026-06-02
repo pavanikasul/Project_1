@@ -248,8 +248,7 @@ export default function RegisterPage() {
                         }
                       }
                     });
-                    alert("authError = " + JSON.stringify(authError));
-alert("authData = " + JSON.stringify(authData));
+                   
                     
                     console.log('authData:', authData)
 console.log('authError:', authError)
@@ -286,7 +285,7 @@ if (!authData?.user) {
                         exam_slot: null,
                         created_at: new Date().toISOString()
                       });
-                      alert("profileError = " + JSON.stringify(profileError));
+                  console.log('profileError:', profileError);
                       if (profileError) {
   console.error("Profile insert error:", profileError);
   alert(profileError.message);
