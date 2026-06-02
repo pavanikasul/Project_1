@@ -415,7 +415,7 @@ console.log("isUUID =", isUUID);
     status: 'Approved',
     exam_slot: scheduledTime
   })
-  .eq('id', candidateId)
+  .eq('email', candidate.email)
   .select();
 
 console.log("UPDATED ROWS:", data);
