@@ -263,6 +263,13 @@ console.log('authError:', authError)
                     if (authError) {
                       console.warn("Supabase Auth Error:", authError);
                     } else if (authData.user) {
+                      console.log("authData:", authData);
+console.log("authError:", authError);
+
+if (!authData?.user) {
+  alert("No user returned from Supabase");
+  return;
+}
                       // Note: We keep the UUID in Supabase database mapping for FK integrity,
                       // but in our candidate session and profiles we use nextApxId for UI tracking.
                       const { error: profileError } = await supabase.from('profiles').insert({
@@ -279,6 +286,7 @@ console.log('authError:', authError)
                         exam_slot: null,
                         created_at: new Date().toISOString()
                       });
+                      alert("profileError = " + JSON.stringify(profileError));
                       if (profileError) {
   console.error("Profile insert error:", profileError);
   alert(profileError.message);
