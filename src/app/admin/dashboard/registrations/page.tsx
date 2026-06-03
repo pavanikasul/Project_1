@@ -181,7 +181,7 @@ export default function RegistrationsPage() {
     prev.filter(c => c.id !== candidateId)
   );
 
-
+  await fetchCandidates();
   alert("Candidate deleted successfully");
 };
 
@@ -221,7 +221,7 @@ export default function RegistrationsPage() {
         // Enrich data with status since the profiles table doesn't have a status column
         const enrichedSupabase = supabaseData.map((c: any) => ({
           ...c,
-         status: c.status || 'Pending'
+         status: c.status ?? 'Pending'
         }));
 
         const supabaseIds = new Set(enrichedSupabase.map((c: any) => c.id));
@@ -430,7 +430,7 @@ useEffect(() => {
         : c
     )
   );
-
+  await fetchCandidates();
   alert("Candidate approved successfully");
 };
 
@@ -466,7 +466,7 @@ const handleReject = async (candidateId: string) => {
     )
   );
 
-
+  await fetchCandidates();
   alert("Candidate rejected successfully");
 };
 
@@ -607,7 +607,7 @@ const handleReject = async (candidateId: string) => {
                   >
                     <Trash2 size={14} /> Delete
                   </button>
-                  {reg.status !== "Approved" && reg.status !== "Rejected" && (
+                 {(reg.status ?? 'Pending').toLowerCase() === 'pending' && (
                     <>
                       <button
   className={styles.btnPrimary}
