@@ -175,9 +175,28 @@ export default function RegistrationsPage() {
   setCandidates(prev =>
     prev.filter(c => c.id !== candidateId)
   );
+ const local = JSON.parse(
+    localStorage.getItem("allCandidates") || "[]"
+  );
+
+  const updatedLocal = local.filter(
+    (c:any)=>c.id !== candidateId
+  );
+
+  localStorage.setItem(
+    "allCandidates",
+    JSON.stringify(updatedLocal)
+  );
+
 
   alert("Candidate deleted successfully");
+
+
+  setTimeout(() => {
+    fetchCandidates();
+  },500);
 };
+  
 
   const fetchCandidates = async () => {
     setLoading(true);
@@ -221,7 +240,9 @@ export default function RegistrationsPage() {
         const supabaseIds = new Set(enrichedSupabase.map((c: any) => c.id));
         const supabaseEmails = new Set(enrichedSupabase.map((c: any) => c.email?.toLowerCase().trim()));
         const offlineOnly = uniqueLocal.filter((c: any) => {
-          const isLocalCandidate = c.role === 'candidate';
+        const isLocalCandidate =
+  c.role === 'candidate' &&
+  !supabaseIds.has(c.id);
           const inSupabase = supabaseIds.has(c.id) || (c.email && supabaseEmails.has(c.email.toLowerCase().trim()));
           return isLocalCandidate && !inSupabase;
         });
@@ -339,14 +360,11 @@ export default function RegistrationsPage() {
       console.error("Error updating local currentUser:", e);
     }
   };
+
   const handleAccept = async (candidateId: string) => {
   console.log("ACCEPT CLICKED:", candidateId);
 
-  const scheduledDate = new Date(
-    Date.now() + 5.5 * 60 * 60 * 1000
-  );
-
-  const scheduledTime = scheduledDate.toISOString();
+  const scheduledTime = new Date().toISOString();
 
   const { error } = await supabase
     .from("profiles")
@@ -356,30 +374,32 @@ export default function RegistrationsPage() {
     })
     .eq("id", candidateId);
 
-
   if (error) {
-    console.error("ACCEPT FAILED:", error);
-    alert("Accept failed");
+    console.error("ACCEPT ERROR:", error);
+    alert("Approval failed");
     return;
   }
 
-
+  // update screen immediately
   setCandidates(prev =>
-    prev.map(candidate =>
-      candidate.id === candidateId
+    prev.map(c =>
+      c.id === candidateId
         ? {
-            ...candidate,
+            ...c,
             status: "Approved",
-            exam_slot: scheduledTime,
+            exam_slot: scheduledTime
           }
-        : candidate
+        : c
     )
   );
 
-
   alert("Candidate approved successfully");
-};
 
+  // IMPORTANT
+  setTimeout(() => {
+    fetchCandidates();
+  }, 500);
+};
 
     // Refresh candidate list
     // fetchCandidates();
@@ -396,16 +416,28 @@ const handleReject = async (candidateId: string) => {
 
   if (error) {
     console.log("REJECT ERROR:", error);
+    alert("Reject failed");
     return;
   }
+
 
   setCandidates(prev =>
     prev.map(c =>
       c.id === candidateId
-        ? { ...c, status: "Rejected" }
+        ? {
+            ...c,
+            status: "Rejected"
+          }
         : c
     )
   );
+
+
+  alert("Candidate rejected successfully");
+
+  setTimeout(() => {
+    fetchCandidates();
+  }, 500);
 };
 
 
