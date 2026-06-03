@@ -339,47 +339,47 @@ export default function RegistrationsPage() {
       console.error("Error updating local currentUser:", e);
     }
   };
-  
-const handleAccept = async (candidateId: string) => {
+  const handleAccept = async (candidateId: string) => {
   console.log("ACCEPT CLICKED:", candidateId);
 
-  const scheduledDate = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
+  const scheduledDate = new Date(
+    Date.now() + 5.5 * 60 * 60 * 1000
+  );
+
   const scheduledTime = scheduledDate.toISOString();
 
-  // 1. Update Supabase first
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("profiles")
     .update({
       status: "Approved",
       exam_slot: scheduledTime,
     })
-    .eq("id", candidateId)
-    .select();
+    .eq("id", candidateId);
 
-  console.log("SUPABASE RESULT:", data);
-  console.log("SUPABASE ERROR:", error);
 
   if (error) {
     console.error("ACCEPT FAILED:", error);
+    alert("Accept failed");
     return;
   }
 
-  // 2. Update UI only after DB success
+
   setCandidates(prev =>
-    prev.map(c =>
-      c.id === candidateId
+    prev.map(candidate =>
+      candidate.id === candidateId
         ? {
-            ...c,
+            ...candidate,
             status: "Approved",
             exam_slot: scheduledTime,
           }
-        : c
+        : candidate
     )
   );
 
-  console.log("ACCEPT SUCCESS");
+
+  alert("Candidate approved successfully");
 };
- 
+
 
     // Refresh candidate list
     // fetchCandidates();
