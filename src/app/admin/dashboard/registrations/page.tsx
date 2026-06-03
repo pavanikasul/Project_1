@@ -154,46 +154,35 @@ export default function RegistrationsPage() {
       alert("An error occurred while saving candidate details.");
     }
   };
-
-  const handleDeleteCandidate = async (candidateId: string) => {
-
-  if (!window.confirm("Are you sure you want to delete this candidate?")) {
-    return;
-  }
-
-  const { error } = await supabase
-    .from("profiles")
-    .delete()
-    .eq("id", candidateId);
-
-  if (error) {
-    console.error("DELETE ERROR:", error);
-    alert("Delete failed");
-    return;
-  }
-
-  setCandidates(prev =>
-    prev.filter(c => c.id !== candidateId)
-  );
- const local = JSON.parse(
-    localStorage.getItem("allCandidates") || "[]"
-  );
-
-  const updatedLocal = local.filter(
-    (c:any)=>c.id !== candidateId
-  );
-
-  localStorage.setItem(
-    "allCandidates",
-    JSON.stringify(updatedLocal)
-  );
+const handleDeleteCandidate = async (candidateId:string)=>{
 
 
-  alert("Candidate deleted successfully");
+ const {data,error}=await supabase
+ .from("profiles")
+ .delete()
+ .eq("id",candidateId)
+ .select();
 
 
+ if(error){
+   console.log("DELETE ERROR",error);
+   alert("Delete failed");
+   return;
+ }
+
+
+ console.log("DELETED:",data);
+
+
+ setCandidates(prev =>
+   prev.filter(c=>c.id!==candidateId)
+ );
+
+
+ alert("Candidate deleted successfully");
 
 };
+
   
 
   const fetchCandidates = async () => {
@@ -412,7 +401,7 @@ useEffect(() => {
   };
 
   const handleAccept = async (candidateId: string) => {
-  console.log("ACCEPT CLICKED:", candidateId);
+  
 
   const scheduledTime = new Date().toISOString();
 
@@ -423,25 +412,25 @@ useEffect(() => {
       exam_slot: scheduledTime,
     })
     .eq("id", candidateId);
+    .select()
+    .single();
 
   if (error) {
     console.error("ACCEPT ERROR:", error);
     alert("Approval failed");
     return;
   }
+console.log("UPDATED ROW:", data);
 
   // update screen immediately
-  setCandidates(prev =>
+ setCandidates(prev =>
     prev.map(c =>
       c.id === candidateId
-        ? {
-            ...c,
-            status: "Approved",
-            exam_slot: scheduledTime
-          }
+        ? data
         : c
     )
   );
+
 
   alert("Candidate approved successfully");
 
@@ -461,24 +450,26 @@ const handleReject = async (candidateId: string) => {
       status: "Rejected",
     })
     .eq("id", candidateId);
+  .select()
+.single();
 
   if (error) {
     console.log("REJECT ERROR:", error);
     alert("Reject failed");
     return;
   }
+console.log("UPDATED ROW:", data);
 
 
   setCandidates(prev =>
     prev.map(c =>
       c.id === candidateId
-        ? {
-            ...c,
-            status: "Rejected"
-          }
+        ? data
         : c
     )
   );
+
+
 
 
   alert("Candidate rejected successfully");
