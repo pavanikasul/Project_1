@@ -404,8 +404,8 @@ useEffect(() => {
       exam_slot: scheduledTime
     })
     .eq("id", candidateId)
-    .select()
-    .single();
+    .select();
+    
 
 
   if (error) {
@@ -434,8 +434,7 @@ const handleReject = async (candidateId: string) => {
       status: "Rejected",
     })
     .eq("id", candidateId)
-    .select()
-    .single();
+    .select();
 
 
   if (error) {
