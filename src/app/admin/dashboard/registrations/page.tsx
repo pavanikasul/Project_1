@@ -404,14 +404,13 @@ useEffect(() => {
   
 
   const scheduledTime = new Date().toISOString();
-
-  const { error } = await supabase
+    const { data, error } = await supabase
     .from("profiles")
     .update({
       status: "Approved",
       exam_slot: scheduledTime,
     })
-    .eq("id", candidateId);
+    .eq("id", candidateId)
     .select()
     .single();
 
