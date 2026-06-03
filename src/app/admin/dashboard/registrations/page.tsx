@@ -154,28 +154,42 @@ export default function RegistrationsPage() {
       alert("An error occurred while saving candidate details.");
     }
   };
+const handleDelete = async (candidateId:string) => {
 
-  const handleDelete = async (candidateId:string)=>{
-
- const { error } = await supabase
-   .from("profiles")
-   .delete()
-   .eq("id", candidateId);
+  console.log("DELETE ID:", candidateId);
 
 
- if(error){
-   alert(error.message);
-   return;
- }
+  const { data, error } = await supabase
+    .from("profiles")
+    .delete()
+    .eq("id", candidateId)
+    .select();
 
 
- setCandidates(prev =>
-   prev.filter(c=>c.id!==candidateId)
- );
+  console.log("DELETE RESULT:", data);
+  console.log("DELETE ERROR:", error);
 
 
- alert("Candidate deleted successfully");
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+
+  if(!data || data.length === 0){
+    alert("0 rows deleted - wrong id");
+    return;
+  }
+
+
+  setCandidates(prev =>
+    prev.filter(c => c.id !== candidateId)
+  );
+
+
+  alert("Candidate deleted");
 };
+ 
 
   const fetchCandidates = async () => {
     setLoading(true);
@@ -394,18 +408,40 @@ useEffect(() => {
 
 const handleAccept = async (candidateId:string) => {
 
-  const { error } = await supabase
+  console.log("CLICKED ID:", candidateId);
+
+
+  const { data:check } = await supabase
+    .from("profiles")
+    .select("id,status")
+    .eq("id", candidateId);
+
+
+  console.log("FOUND ROW:", check);
+
+
+  const { data, error } = await supabase
     .from("profiles")
     .update({
       status:"Approved",
       exam_slot:new Date().toISOString()
     })
-    .eq("id", candidateId);
+    .eq("id", candidateId)
+    .select();
+
+
+  console.log("UPDATE RESULT:", data);
+  console.log("UPDATE ERROR:", error);
 
 
   if(error){
-    console.log(error);
     alert(error.message);
+    return;
+  }
+
+
+  if(!data || data.length === 0){
+    alert("0 rows updated - wrong id");
     return;
   }
 
@@ -413,45 +449,54 @@ const handleAccept = async (candidateId:string) => {
   setCandidates(prev =>
     prev.map(c =>
       c.id === candidateId
-      ? {...c, status:"Approved", exam_slot:new Date().toISOString()}
+      ? data[0]
       : c
     )
   );
 
 
-  alert("Candidate approved successfully");
+  alert("Approved");
 };
-
     // Refresh candidate list
     // fetchCandidates();
-const handleReject = async(candidateId:string)=>{
+const handleReject = async (candidateId:string) => {
 
- const {error}=await supabase
- .from("profiles")
- .update({
-   status:"Rejected"
- })
- .eq("id",candidateId);
+  console.log("REJECT ID:", candidateId);
 
-
- if(error){
-   alert(error.message);
-   return;
- }
+  const { data, error } = await supabase
+    .from("profiles")
+    .update({
+      status:"Rejected"
+    })
+    .eq("id", candidateId)
+    .select();
 
 
- setCandidates(prev =>
-   prev.map(c =>
-    c.id===candidateId
-    ? {...c,status:"Rejected"}
-    : c
-   )
- );
+  console.log("REJECT RESULT:", data);
+  console.log("REJECT ERROR:", error);
 
 
- alert("Candidate rejected successfully");
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+
+  if(!data || data.length === 0){
+    alert("0 rows updated - wrong id");
+    return;
+  }
+
+
+  setCandidates(prev =>
+    prev.map(c =>
+      c.id === candidateId ? data[0] : c
+    )
+  );
+
+
+  alert("Candidate rejected");
 };
-  
   const filteredCandidates = candidates.filter(c => 
     c.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
     c.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
