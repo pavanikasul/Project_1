@@ -155,14 +155,7 @@ export default function RegistrationsPage() {
     }
   };
 
-  const handleDeleteCandidate = async (candidateId: string) => {
-
-  const confirmDelete = window.confirm(
-    "Are you sure you want to delete this candidate?"
-  );
-
-  if (!confirmDelete) return;
-
+const handleDelete = async (candidateId: string) => {
 
   const { error } = await supabase
     .from("profiles")
@@ -171,8 +164,8 @@ export default function RegistrationsPage() {
 
 
   if (error) {
-    console.error("DELETE ERROR:", error);
-    alert(error.message);
+    console.error(error);
+    alert("Delete failed");
     return;
   }
 
@@ -181,7 +174,7 @@ export default function RegistrationsPage() {
     prev.filter(c => c.id !== candidateId)
   );
 
-  await fetchCandidates();
+
   alert("Candidate deleted successfully");
 };
 
@@ -401,72 +394,62 @@ useEffect(() => {
   };
 
  const handleAccept = async (candidateId: string) => {
-  console.log("ACCEPT CLICKED:", candidateId);
-
   const scheduledTime = new Date().toISOString();
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("profiles")
     .update({
       status: "Approved",
       exam_slot: scheduledTime,
     })
-    .eq("id", candidateId);
+    .eq("id", candidateId)
+    .select()
+    .single();
 
   if (error) {
-    console.error("ACCEPT ERROR:", error);
-    alert(error.message);
+    console.error(error);
+    alert("Approval failed");
     return;
   }
 
   setCandidates(prev =>
     prev.map(c =>
-      c.id === candidateId
-        ? {
-            ...c,
-            status: "Approved",
-            exam_slot: scheduledTime
-          }
-        : c
+      c.id === candidateId ? data : c
     )
   );
-  await fetchCandidates();
+
   alert("Candidate approved successfully");
 };
 
     // Refresh candidate list
     // fetchCandidates();
   
-
 const handleReject = async (candidateId: string) => {
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("profiles")
     .update({
-      status: "Rejected"
+      status: "Rejected",
     })
-    .eq("id", candidateId);
+    .eq("id", candidateId)
+    .select()
+    .single();
 
 
   if (error) {
-    console.error("REJECT ERROR:", error);
-    alert(error.message);
+    console.error(error);
+    alert("Reject failed");
     return;
   }
 
 
   setCandidates(prev =>
     prev.map(c =>
-      c.id === candidateId
-        ? {
-            ...c,
-            status: "Rejected"
-          }
-        : c
+      c.id === candidateId ? data : c
     )
   );
 
-  await fetchCandidates();
+
   alert("Candidate rejected successfully");
 };
 
