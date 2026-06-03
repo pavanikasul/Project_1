@@ -154,8 +154,12 @@ export default function RegistrationsPage() {
       alert("An error occurred while saving candidate details.");
     }
   };
-
 const handleDelete = async (candidateId: string) => {
+
+  const confirmDelete = confirm("Delete this candidate?");
+
+  if (!confirmDelete) return;
+
 
   const { error } = await supabase
     .from("profiles")
@@ -164,19 +168,20 @@ const handleDelete = async (candidateId: string) => {
 
 
   if (error) {
-    console.error(error);
-    alert("Delete failed");
+    console.log("DELETE ERROR:", error.message);
+    alert(error.message);
     return;
   }
 
 
   setCandidates(prev =>
-    prev.filter(c => c.id !== candidateId)
+    prev.filter(item => item.id !== candidateId)
   );
 
 
   alert("Candidate deleted successfully");
 };
+
 
   const fetchCandidates = async () => {
     setLoading(true);
@@ -393,34 +398,32 @@ useEffect(() => {
     }
   };
 
-  const handleAccept = async (candidateId:string) => {
-
+ const handleAccept = async (candidateId: string) => {
   const scheduledTime = new Date().toISOString();
 
   const { data, error } = await supabase
     .from("profiles")
     .update({
       status: "Approved",
-      exam_slot: scheduledTime
+      exam_slot: scheduledTime,
     })
     .eq("id", candidateId)
-    .select();
-    
-
+    .select()
+    .single();
 
   if (error) {
-    console.log("FULL SUPABASE ERROR:", error);
+    console.log("ACCEPT ERROR:", error.message);
     alert(error.message);
     return;
   }
 
-
   setCandidates(prev =>
-    prev.map(c =>
-      c.id === candidateId ? data : c
+    prev.map(item =>
+      item.id === candidateId ? data : item
     )
   );
 
+  alert("Candidate approved successfully");
 };
 
     // Refresh candidate list
@@ -434,26 +437,26 @@ const handleReject = async (candidateId: string) => {
       status: "Rejected",
     })
     .eq("id", candidateId)
-    .select();
+    .select()
+    .single();
 
 
   if (error) {
-    console.error(error);
-    alert("Reject failed");
+    console.log("REJECT ERROR:", error.message);
+    alert(error.message);
     return;
   }
 
 
   setCandidates(prev =>
-    prev.map(c =>
-      c.id === candidateId ? data : c
+    prev.map(item =>
+      item.id === candidateId ? data : item
     )
   );
 
 
   alert("Candidate rejected successfully");
 };
-
 
   const filteredCandidates = candidates.filter(c => 
     c.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -587,7 +590,7 @@ const handleReject = async (candidateId: string) => {
                     className={styles.btnOutline} 
                     style={{ padding: '0.4rem 0.8rem', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', borderColor: '#ef4444', color: '#ef4444' }} 
                     title="Delete Candidate"
-                    onClick={() => handleDelete(reg.id)}
+                   onClick={() => handleDelete(String(reg.id))}
                   >
                     <Trash2 size={14} /> Delete
                   </button>
@@ -605,10 +608,7 @@ const handleReject = async (candidateId: string) => {
     borderRadius: '6px',
     cursor: 'pointer'
   }}
-  onClick={() => {
-    console.log("ACCEPT BUTTON CLICKED", reg.id);
-    handleAccept(reg.id);
-  }}
+onClick={() => handleAccept(String(reg.id))}
 >
   Accept
 </button>
@@ -616,7 +616,7 @@ const handleReject = async (candidateId: string) => {
                       <button 
                         className={styles.btnOutline} 
                         style={{ padding: '0.4rem 0.8rem', borderColor: '#ef4444', color: '#ef4444', fontSize: '0.85rem', fontWeight: 'bold', borderRadius: '6px', cursor: 'pointer' }} 
-                        onClick={() => handleReject(reg.id)}
+                       onClick={() => handleReject(String(reg.id))} 
                       >
                         Reject
                       </button>
