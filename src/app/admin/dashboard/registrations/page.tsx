@@ -154,36 +154,36 @@ export default function RegistrationsPage() {
       alert("An error occurred while saving candidate details.");
     }
   };
-const handleDeleteCandidate = async (candidateId:string)=>{
+
+  const handleDeleteCandidate = async (candidateId: string) => {
+
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this candidate?"
+  );
+
+  if (!confirmDelete) return;
 
 
- const {data,error}=await supabase
- .from("profiles")
- .delete()
- .eq("id",candidateId)
- .select();
+  const { error } = await supabase
+    .from("profiles")
+    .delete()
+    .eq("id", candidateId);
 
 
- if(error){
-   console.log("DELETE ERROR",error);
-   alert("Delete failed");
-   return;
- }
+  if (error) {
+    console.error("DELETE ERROR:", error);
+    alert(error.message);
+    return;
+  }
 
 
- console.log("DELETED:",data);
+  setCandidates(prev =>
+    prev.filter(c => c.id !== candidateId)
+  );
 
 
- setCandidates(prev =>
-   prev.filter(c=>c.id!==candidateId)
- );
-
-
- alert("Candidate deleted successfully");
-
+  alert("Candidate deleted successfully");
 };
-
-  
 
   const fetchCandidates = async () => {
     setLoading(true);
@@ -400,30 +400,25 @@ useEffect(() => {
     }
   };
 
-  const handleAccept = async (candidateId: string) => {
+ const handleAccept = async (candidateId: string) => {
   console.log("ACCEPT CLICKED:", candidateId);
 
   const scheduledTime = new Date().toISOString();
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("profiles")
     .update({
       status: "Approved",
       exam_slot: scheduledTime,
     })
-    .eq("id", candidateId)
-    .select()
-    .single();
+    .eq("id", candidateId);
 
   if (error) {
     console.error("ACCEPT ERROR:", error);
-    alert("Approval failed");
+    alert(error.message);
     return;
   }
 
-  console.log("UPDATED ROW:", data);
-
-  // Update UI immediately
   setCandidates(prev =>
     prev.map(c =>
       c.id === candidateId
@@ -438,27 +433,27 @@ useEffect(() => {
 
   alert("Candidate approved successfully");
 };
- 
 
     // Refresh candidate list
     // fetchCandidates();
   
+
 const handleReject = async (candidateId: string) => {
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("profiles")
     .update({
-      status: "Rejected",
+      status: "Rejected"
     })
-    .eq("id", candidateId)
-    .select()
-    .single();
+    .eq("id", candidateId);
+
 
   if (error) {
     console.error("REJECT ERROR:", error);
-    alert("Reject failed");
+    alert(error.message);
     return;
   }
+
 
   setCandidates(prev =>
     prev.map(c =>
@@ -471,10 +466,9 @@ const handleReject = async (candidateId: string) => {
     )
   );
 
-  alert("Candidate rejected");
+
+  alert("Candidate rejected successfully");
 };
-
-
 
 
   const filteredCandidates = candidates.filter(c => 
