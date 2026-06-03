@@ -586,7 +586,7 @@ const handleReject = async (candidateId: string) => {
                     className={styles.btnOutline} 
                     style={{ padding: '0.4rem 0.8rem', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', borderColor: '#ef4444', color: '#ef4444' }} 
                     title="Delete Candidate"
-                    onClick={() => handleDeleteCandidate(reg.id)}
+                    onClick={() => handleDelete(reg.id)}
                   >
                     <Trash2 size={14} /> Delete
                   </button>
