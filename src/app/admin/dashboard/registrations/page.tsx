@@ -197,7 +197,7 @@ const handleDelete = async (candidateId:string) => {
       // PRIMARY SOURCE: Supabase — shows candidates from ALL devices/laptops
       const { data: supabaseData, error } = await supabase
         .from('profiles')
-        .select(id,user_id,status,exam_slot,name,email")
+        .select("id,user_id,status,exam_slot,name,email")
         .eq('role', 'candidate')
         .order('created_at', { ascending: false });
 
