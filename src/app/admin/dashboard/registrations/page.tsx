@@ -441,24 +441,26 @@ console.log("UPDATED ROW:", data);
     // Refresh candidate list
     // fetchCandidates();
   
-
 const handleReject = async (candidateId: string) => {
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("profiles")
     .update({
-      status: "Rejected",
+      status: "Rejected"
     })
-    .eq("id", candidateId);
-  .select()
-.single();
+    .eq("id", candidateId)
+    .select()
+    .single();
+
 
   if (error) {
     console.log("REJECT ERROR:", error);
     alert("Reject failed");
     return;
   }
-console.log("UPDATED ROW:", data);
+
+
+  console.log("UPDATED ROW:", data);
 
 
   setCandidates(prev =>
@@ -470,11 +472,9 @@ console.log("UPDATED ROW:", data);
   );
 
 
-
-
   alert("Candidate rejected successfully");
-
 };
+
 
 
 
