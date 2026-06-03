@@ -406,56 +406,37 @@ useEffect(() => {
     }
   };
 
-const handleAccept = async (candidateId:string) => {
+const handleAccept = async (candidateId: string) => {
 
-  console.log("CLICKED ID:", candidateId);
-
-
-  const { data:check } = await supabase
-    .from("profiles")
-    .select("id,status")
-    .eq("id", candidateId);
-
-
-  console.log("FOUND ROW:", check);
-
+  if (!candidateId) {
+    alert("Missing candidate id");
+    return;
+  }
 
   const { data, error } = await supabase
     .from("profiles")
     .update({
-      status:"Approved",
-      exam_slot:new Date().toISOString()
+      status: "Approved",
+      exam_slot: new Date().toISOString()
     })
     .eq("id", candidateId)
-    .select();
-
-
-  console.log("UPDATE RESULT:", data);
-  console.log("UPDATE ERROR:", error);
+    .select()
+    .single();
 
 
   if(error){
+    console.log(error);
     alert(error.message);
     return;
   }
 
-
-  if(!data || data.length === 0){
-    alert("0 rows updated - wrong id");
-    return;
-  }
-
-
   setCandidates(prev =>
     prev.map(c =>
-      c.id === candidateId
-      ? data[0]
-      : c
+      c.id === candidateId ? data : c
     )
   );
 
-
-  alert("Approved");
+  alert("Candidate approved successfully");
 };
     // Refresh candidate list
     // fetchCandidates();
@@ -629,7 +610,7 @@ const handleReject = async (candidateId:string) => {
                     className={styles.btnOutline} 
                     style={{ padding: '0.4rem 0.8rem', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', borderColor: '#ef4444', color: '#ef4444' }} 
                     title="Delete Candidate"
-                   onClick={() => handleDelete(reg.user_id)}
+                   onClick={() => handleDelete(reg.user_id) || reg.id}
                   >
                     <Trash2 size={14} /> Delete
                   </button>
@@ -647,7 +628,7 @@ const handleReject = async (candidateId:string) => {
     borderRadius: '6px',
     cursor: 'pointer'
   }}
-onClick={() => handleAccept(reg.profile_id)}
+onClick={() => handleAccept(reg.user_id || reg.id)}
 >
   Accept
 </button>
@@ -655,7 +636,7 @@ onClick={() => handleAccept(reg.profile_id)}
                       <button 
                         className={styles.btnOutline} 
                         style={{ padding: '0.4rem 0.8rem', borderColor: '#ef4444', color: '#ef4444', fontSize: '0.85rem', fontWeight: 'bold', borderRadius: '6px', cursor: 'pointer' }} 
-                       onClick={() => handleReject(reg.user_id)} 
+                       onClick={() => handleReject(reg.user_id || reg.id)} 
                       >
                         Reject
                       </button>
