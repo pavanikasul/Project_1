@@ -413,12 +413,12 @@ useEffect(() => {
     .eq("id", candidateId)
     .select()
     .single();
-
-  if (error) {
-    console.error("ACCEPT ERROR:", error);
-    alert("Approval failed");
-    return;
-  }
+if (error) {
+  console.error("ACCEPT ERROR FULL:", error.message);
+  alert(error.message);
+  return;
+}
+ 
 console.log("UPDATED ROW:", data);
 
   // update screen immediately
