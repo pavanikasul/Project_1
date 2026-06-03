@@ -393,24 +393,27 @@ useEffect(() => {
     }
   };
 
- const handleAccept = async (candidateId: string) => {
+  const handleAccept = async (candidateId:string) => {
+
   const scheduledTime = new Date().toISOString();
 
   const { data, error } = await supabase
     .from("profiles")
     .update({
       status: "Approved",
-      exam_slot: scheduledTime,
+      exam_slot: scheduledTime
     })
     .eq("id", candidateId)
     .select()
     .single();
 
+
   if (error) {
-    console.error(error);
-    alert("Approval failed");
+    console.log("FULL SUPABASE ERROR:", error);
+    alert(error.message);
     return;
   }
+
 
   setCandidates(prev =>
     prev.map(c =>
@@ -418,7 +421,6 @@ useEffect(() => {
     )
   );
 
-  alert("Candidate approved successfully");
 };
 
     // Refresh candidate list
