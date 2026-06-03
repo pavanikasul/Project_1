@@ -170,7 +170,7 @@ export default function RegistrationsPage() {
 
 
  setCandidates(prev =>
-   prev.filter(item=>item.id !== candidateId)
+   prev.filter(c=>c.id!==candidateId)
  );
 
 
@@ -392,56 +392,46 @@ useEffect(() => {
     }
   };
 
-  const handleAccept = async (candidateId: string) => {
+const handleAccept = async (candidateId:string) => {
 
-  const scheduledTime = new Date().toISOString();
-
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("profiles")
     .update({
-      status: "Approved",
-      exam_slot: scheduledTime,
+      status:"Approved",
+      exam_slot:new Date().toISOString()
     })
-    .eq("id", candidateId)
-    .select();
+    .eq("id", candidateId);
 
 
-  if (error) {
-    console.log("ACCEPT ERROR:", error);
+  if(error){
+    console.log(error);
     alert(error.message);
     return;
   }
 
 
-  if (!data || data.length === 0) {
-    alert("No candidate updated");
-    return;
-  }
-
-
   setCandidates(prev =>
-    prev.map(item =>
-      item.id === candidateId ? data[0] : item
+    prev.map(c =>
+      c.id === candidateId
+      ? {...c, status:"Approved", exam_slot:new Date().toISOString()}
+      : c
     )
   );
 
 
   alert("Candidate approved successfully");
 };
- 
 
     // Refresh candidate list
     // fetchCandidates();
+const handleReject = async(candidateId:string)=>{
 
-  const handleReject = async (candidateId: string) => {
-
- const { data, error } = await supabase
-   .from("profiles")
-   .update({
-     status:"Rejected"
-   })
-   .eq("id", candidateId)
-   .select();
+ const {error}=await supabase
+ .from("profiles")
+ .update({
+   status:"Rejected"
+ })
+ .eq("id",candidateId);
 
 
  if(error){
@@ -451,15 +441,17 @@ useEffect(() => {
 
 
  setCandidates(prev =>
-   prev.map(item =>
-     item.id === candidateId ? data[0] : item
+   prev.map(c =>
+    c.id===candidateId
+    ? {...c,status:"Rejected"}
+    : c
    )
  );
 
 
  alert("Candidate rejected successfully");
 };
-
+  
   const filteredCandidates = candidates.filter(c => 
     c.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
     c.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
