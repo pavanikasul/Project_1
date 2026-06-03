@@ -156,47 +156,28 @@ export default function RegistrationsPage() {
   };
 
   const handleDeleteCandidate = async (candidateId: string) => {
-    if (!window.confirm(`Are you sure you want to delete candidate ${getApxId(candidateId)}? This action cannot be undone.`)) {
-      return;
-    }
 
-    try {
-      // 1. Delete from local storage
-      const existingCandidates = JSON.parse(localStorage.getItem('allCandidates') || '[]');
-      const updated = existingCandidates.filter((c: any) => c.id !== candidateId);
-      localStorage.setItem('allCandidates', JSON.stringify(updated));
+  if (!window.confirm("Are you sure you want to delete this candidate?")) {
+    return;
+  }
 
-      // Clear currentUser if the deleted candidate is logged in
-      const currentUserStr = localStorage.getItem('currentUser');
-      if (currentUserStr) {
-        const curr = JSON.parse(currentUserStr);
-        if (curr.id === candidateId) {
-          localStorage.removeItem('currentUser');
-        }
-      }
+  const { error } = await supabase
+    .from("profiles")
+    .delete()
+    .eq("id", candidateId);
 
-      // 2. Delete from Supabase ONLY if it is a valid UUID
-      const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(candidateId);
-      if (isUUID) {
-        const { error } = await supabase
-          .from('profiles')
-          .delete()
-          .eq('id', candidateId);
+  if (error) {
+    console.error("DELETE ERROR:", error);
+    alert("Delete failed");
+    return;
+  }
 
-        if (error) {
-          console.error("Supabase profile deletion error:", error);
-        }
-      } else {
-        console.warn(`Skipped Supabase delete: ${candidateId} is an offline local ID.`);
-      }
+  setCandidates(prev =>
+    prev.filter(c => c.id !== candidateId)
+  );
 
-      fetchCandidates();
-      alert("Candidate deleted successfully!");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to delete candidate.");
-    }
-  };
+  alert("Candidate deleted successfully");
+};
 
   const fetchCandidates = async () => {
     setLoading(true);
@@ -358,113 +339,76 @@ export default function RegistrationsPage() {
       console.error("Error updating local currentUser:", e);
     }
   };
+  
+const handleAccept = async (candidateId: string) => {
+  console.log("ACCEPT CLICKED:", candidateId);
 
-  const handleAccept = async (candidateId: string) => {
-    console.log("candidateId", candidateId);
-    // Schedule 5.5 hours from now
-    let scheduledDate = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
-    const hour = scheduledDate.getHours();
-    
-    if (hour < 9) {
-      // Too early! Move to 9:00 AM of the same day
-      scheduledDate.setHours(9, 0, 0, 0);
-    } else if (hour >= 21) {
-      // Too late! Move to 9:00 AM of the next day
-      scheduledDate.setDate(scheduledDate.getDate() + 1);
-      scheduledDate.setHours(9, 0, 0, 0);
-    }
-    
-    const scheduledTime = scheduledDate.toISOString();
-    
-    // Find candidate details first
-    const candidate = candidates.find(c => c.id === candidateId);
-    
-    // Update local storage
-    const updates = {
-      status: 'Approved',
-      exam_slot: scheduledTime
-    };
-    console.log("UPDATES:", updates);
-    updateCandidateLocal(candidateId, updates);
-    console.log("LOCAL UPDATE DONE");
-    setCandidates(prev =>
-  prev.map(c =>
-    c.id === candidateId
-      ? {
-          ...c,
-          status: 'Approved',
-          exam_slot: scheduledTime
-        }
-      : c
-  )
-);
-    console.log(
-  "UPDATED CANDIDATE",
-  candidates.find(c => c.id === candidateId)
-);
+  const scheduledDate = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
+  const scheduledTime = scheduledDate.toISOString();
 
-    // Update Supabase profiles table ONLY if candidateId is a valid UUID
-    try {
-      const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(candidateId);
-      console.log("candidateId =", candidateId);
-console.log("isUUID =", isUUID);
-      if (isUUID) {
-       const { data, error } = await supabase
-  .from('profiles')
-  .update({
-    status: 'Approved',
-    exam_slot: scheduledTime
-  })
-  .eq('id', candidateId)
-  .select();
-        
-  console.log("SUPABASE UPDATE RESULT:", data);
-  console.log("SUPABASE UPDATE ERROR:", error);
+  // 1. Update Supabase first
+  const { data, error } = await supabase
+    .from("profiles")
+    .update({
+      status: "Approved",
+      exam_slot: scheduledTime,
+    })
+    .eq("id", candidateId)
+    .select();
 
+  console.log("SUPABASE RESULT:", data);
+  console.log("SUPABASE ERROR:", error);
 
-        if (error) {
-          console.error("Supabase exam_slot update failed:", error);
-        }
-      } else {
-        console.warn(`Skipped Supabase update: ${candidateId} is an offline local ID.`);
-      }
-    } catch (err) {
-      console.error("Supabase update error:", err);
-    }
+  if (error) {
+    console.error("ACCEPT FAILED:", error);
+    return;
+  }
+
+  // 2. Update UI only after DB success
+  setCandidates(prev =>
+    prev.map(c =>
+      c.id === candidateId
+        ? {
+            ...c,
+            status: "Approved",
+            exam_slot: scheduledTime,
+          }
+        : c
+    )
+  );
+
+  console.log("ACCEPT SUCCESS");
+};
+ 
 
     // Refresh candidate list
     // fetchCandidates();
   };
-    
 
-  const handleReject = async (candidateId: string) => {
-    // Update local storage
-    const updates = {
-      status: 'Rejected',
-      exam_slot: null
-    };
-    updateCandidateLocal(candidateId, updates);
+const handleReject = async (candidateId: string) => {
 
-    // Update Supabase profiles table ONLY if candidateId is a valid UUID
-    try {
-      const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(candidateId);
-      if (isUUID) {
-        const { error } = await supabase
-          .from('profiles')
-          .update({
-            exam_slot: null
-          })
-          .eq('id', candidateId);
+  const { error } = await supabase
+    .from("profiles")
+    .update({
+      status: "Rejected",
+    })
+    .eq("id", candidateId);
 
-        if (error) {
-          console.error("Supabase reject update failed:", error);
-        }
-      } else {
-        console.warn(`Skipped Supabase reject: ${candidateId} is an offline local ID.`);
-      }
-    } catch (err) {
-      console.error("Supabase update error:", err);
-    }
+  if (error) {
+    console.log("REJECT ERROR:", error);
+    return;
+  }
+
+  setCandidates(prev =>
+    prev.map(c =>
+      c.id === candidateId
+        ? { ...c, status: "Rejected" }
+        : c
+    )
+  );
+};
+
+ 
 
     // Refresh candidate list
     fetchCandidates();
