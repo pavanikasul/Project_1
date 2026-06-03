@@ -192,9 +192,7 @@ export default function RegistrationsPage() {
   alert("Candidate deleted successfully");
 
 
-  setTimeout(() => {
-    fetchCandidates();
-  },500);
+
 };
   
 
@@ -295,19 +293,71 @@ export default function RegistrationsPage() {
       setLoading(false);
     }
   };
+useEffect(() => {
 
-  useEffect(() => {
-    fetchCandidates();
+  fetchCandidates();
 
-    const channel = supabase
-      .channel('reg-sync-all')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, fetchCandidates)
-      .subscribe();
+  const channel = supabase
+    .channel('reg-sync-all')
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'profiles'
+      },
+      (payload) => {
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
+        console.log("DATABASE CHANGE:", payload);
+
+        // update only changed record
+        if(payload.eventType === "UPDATE") {
+
+          setCandidates(prev =>
+            prev.map(c =>
+              c.id === payload.new.id
+                ? {
+                    ...c,
+                    ...payload.new
+                  }
+                : c
+            )
+          );
+
+        }
+
+
+        if(payload.eventType === "DELETE") {
+
+          setCandidates(prev =>
+            prev.filter(c =>
+              c.id !== payload.old.id
+            )
+          );
+
+        }
+
+
+        if(payload.eventType === "INSERT") {
+
+          setCandidates(prev => [
+            payload.new,
+            ...prev
+          ]);
+
+        }
+
+      }
+    )
+    .subscribe();
+
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
+
+}, []);
+  
 
   const handleExportCSV = () => {
     const csvRows = [
@@ -396,9 +446,7 @@ export default function RegistrationsPage() {
   alert("Candidate approved successfully");
 
   // IMPORTANT
-  setTimeout(() => {
-    fetchCandidates();
-  }, 500);
+  
 };
 
     // Refresh candidate list
@@ -435,9 +483,6 @@ const handleReject = async (candidateId: string) => {
 
   alert("Candidate rejected successfully");
 
-  setTimeout(() => {
-    fetchCandidates();
-  }, 500);
 };
 
 
