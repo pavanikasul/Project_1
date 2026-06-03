@@ -401,10 +401,11 @@ useEffect(() => {
   };
 
   const handleAccept = async (candidateId: string) => {
-  
+  console.log("ACCEPT CLICKED:", candidateId);
 
   const scheduledTime = new Date().toISOString();
-    const { data, error } = await supabase
+
+  const { data, error } = await supabase
     .from("profiles")
     .update({
       status: "Approved",
@@ -413,29 +414,31 @@ useEffect(() => {
     .eq("id", candidateId)
     .select()
     .single();
-if (error) {
-  console.error("ACCEPT ERROR FULL:", error.message);
-  alert(error.message);
-  return;
-}
- 
-console.log("UPDATED ROW:", data);
 
-  // update screen immediately
- setCandidates(prev =>
+  if (error) {
+    console.error("ACCEPT ERROR:", error);
+    alert("Approval failed");
+    return;
+  }
+
+  console.log("UPDATED ROW:", data);
+
+  // Update UI immediately
+  setCandidates(prev =>
     prev.map(c =>
       c.id === candidateId
-        ? data
+        ? {
+            ...c,
+            status: "Approved",
+            exam_slot: scheduledTime
+          }
         : c
     )
   );
 
-
   alert("Candidate approved successfully");
-
-  // IMPORTANT
-  
 };
+ 
 
     // Refresh candidate list
     // fetchCandidates();
@@ -445,33 +448,30 @@ const handleReject = async (candidateId: string) => {
   const { data, error } = await supabase
     .from("profiles")
     .update({
-      status: "Rejected"
+      status: "Rejected",
     })
     .eq("id", candidateId)
     .select()
     .single();
 
-
   if (error) {
-    console.log("REJECT ERROR:", error);
+    console.error("REJECT ERROR:", error);
     alert("Reject failed");
     return;
   }
 
-
-  console.log("UPDATED ROW:", data);
-
-
   setCandidates(prev =>
     prev.map(c =>
       c.id === candidateId
-        ? data
+        ? {
+            ...c,
+            status: "Rejected"
+          }
         : c
     )
   );
 
-
-  alert("Candidate rejected successfully");
+  alert("Candidate rejected");
 };
 
 
@@ -613,7 +613,7 @@ const handleReject = async (candidateId: string) => {
                   >
                     <Trash2 size={14} /> Delete
                   </button>
-                  {(reg.status || 'Pending') === 'Pending' && (
+                  {reg.status !== "Approved" && reg.status !== "Rejected" && (
                     <>
                       <button
   className={styles.btnPrimary}
