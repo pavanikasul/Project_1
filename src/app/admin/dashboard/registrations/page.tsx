@@ -408,11 +408,7 @@ const handleReject = async (candidateId: string) => {
   );
 };
 
- 
 
-    // Refresh candidate list
-    fetchCandidates();
-  };
 
   const filteredCandidates = candidates.filter(c => 
     c.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
