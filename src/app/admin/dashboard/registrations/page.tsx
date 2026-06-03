@@ -215,7 +215,7 @@ export default function RegistrationsPage() {
         // Enrich data with status since the profiles table doesn't have a status column
         const enrichedSupabase = supabaseData.map((c: any) => ({
           ...c,
-          status: c.status || (c.exam_slot ? 'Approved' : 'Pending')
+         status: c.status || 'Pending'
         }));
 
         const supabaseIds = new Set(enrichedSupabase.map((c: any) => c.id));
