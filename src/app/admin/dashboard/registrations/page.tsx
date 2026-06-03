@@ -415,11 +415,12 @@ console.log("isUUID =", isUUID);
     status: 'Approved',
     exam_slot: scheduledTime
   })
-  .eq('email', candidate.email)
+  .eq('id', candidateId)
   .select();
+        
+  console.log("SUPABASE UPDATE RESULT:", data);
+  console.log("SUPABASE UPDATE ERROR:", error);
 
-console.log("UPDATED ROWS:", data);
-console.log("ERROR:", error);
 
         if (error) {
           console.error("Supabase exam_slot update failed:", error);
