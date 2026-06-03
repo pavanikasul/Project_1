@@ -197,7 +197,7 @@ const handleDelete = async (candidateId:string) => {
       // PRIMARY SOURCE: Supabase — shows candidates from ALL devices/laptops
       const { data: supabaseData, error } = await supabase
         .from('profiles')
-        .select('*')
+        .select(id,user_id,status,exam_slot,name,email")
         .eq('role', 'candidate')
         .order('created_at', { ascending: false });
 
@@ -629,7 +629,7 @@ const handleReject = async (candidateId:string) => {
                     className={styles.btnOutline} 
                     style={{ padding: '0.4rem 0.8rem', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', borderColor: '#ef4444', color: '#ef4444' }} 
                     title="Delete Candidate"
-                   onClick={() => handleDelete(String(reg.id))}
+                   onClick={() => handleDelete(reg.user_id)}
                   >
                     <Trash2 size={14} /> Delete
                   </button>
@@ -647,7 +647,7 @@ const handleReject = async (candidateId:string) => {
     borderRadius: '6px',
     cursor: 'pointer'
   }}
-onClick={() => handleAccept(String(reg.id))}
+onClick={() => handleAccept(reg.profile_id)}
 >
   Accept
 </button>
@@ -655,7 +655,7 @@ onClick={() => handleAccept(String(reg.id))}
                       <button 
                         className={styles.btnOutline} 
                         style={{ padding: '0.4rem 0.8rem', borderColor: '#ef4444', color: '#ef4444', fontSize: '0.85rem', fontWeight: 'bold', borderRadius: '6px', cursor: 'pointer' }} 
-                       onClick={() => handleReject(String(reg.id))} 
+                       onClick={() => handleReject(reg.user_id)} 
                       >
                         Reject
                       </button>
